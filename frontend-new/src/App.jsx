@@ -23,12 +23,12 @@ export default function App() {
 
     try {
       const response = await fetch(API);
-      if (!response.ok) throw new Error("Students load nahi ho sake.");
+      if (!response.ok) throw new Error("Students could not be loaded.");
       const data = await response.json();
       setStudents(data);
     } catch {
       setError(
-        "Backend se connection nahi ho raha. Check karo ke server port 5000 par chal raha hai."
+        "Could not connect to the backend. Please check that the server is running on port 5000."
       );
     } finally {
       setLoading(false);
@@ -68,14 +68,14 @@ export default function App() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Student add nahi hua.");
+        throw new Error(data.message || "Student could not be added.");
       }
 
       setStudents((previous) => [data, ...previous]);
       setForm({ name: "", email: "", course: "" });
-      setMessage("Student successfully register ho gaya!");
+      setMessage("Student added successfully!");
     } catch (err) {
-      setError(err.message || "Kuch ghalat ho gaya.");
+      setError(err.message || "Something went wrong.");
     } finally {
       setSaving(false);
     }
@@ -83,7 +83,7 @@ export default function App() {
 
   async function deleteStudent(id) {
     const confirmed = window.confirm(
-      "Kya tum is student ko delete karna chahti ho?"
+      "Are you sure you want to delete this student?"
     );
 
     if (!confirmed) return;
@@ -99,15 +99,15 @@ export default function App() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Student delete nahi hua.");
+        throw new Error(data.message || "Student could not be deleted.");
       }
 
       setStudents((previous) =>
         previous.filter((student) => student._id !== id)
       );
-      setMessage("Student successfully delete ho gaya.");
+      setMessage("Student deleted successfully.");
     } catch (err) {
-      setError(err.message || "Delete karte waqt error aaya.");
+      setError(err.message || "An error occurred while deleting the student.");
     }
   }
 
