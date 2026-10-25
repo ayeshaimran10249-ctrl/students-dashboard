@@ -53,12 +53,21 @@ app.use(async (req, res, next) => {
   try {
     await connectDB();
     next();
-  } catch (error) {
-    console.error("Database connection failed:", error.message);
+  }    catch (error) {
+    console.error("Database connection failed:", {
+      name: error.name,
+      code: error.code || null,
+      message: error.message,
+    });
+
     res.status(500).json({
       message: "Database connection failed",
+      errorType: error.message === "MONGO_URI is missing"
+        ? "MONGO_URI is missing"
+        : error.name,
+      errorCode: error.code || null,
     });
-  }
+}
 });
 
 app.get("/students", async (req, res) => {
