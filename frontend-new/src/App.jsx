@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
-const API = "http://localhost:5000/students";
+const API = "https://students-dashboard-kappa.vercel.app/students";
 
 export default function App() {
   const [students, setStudents] = useState([]);
